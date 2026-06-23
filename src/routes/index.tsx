@@ -381,30 +381,8 @@ function DashboardMockup() {
           </div>
 
           {/* Auto pentest mission */}
-          <div className="col-span-12 lg:col-span-5 cyber-card scanline p-5 flex flex-col items-center justify-center text-center relative">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-primary mb-2">
-              Auto Pentest — Mission Control
-            </p>
-            <p className="text-xs text-muted-foreground mb-6 max-w-[28ch]">
-              52 tools orchestrated by the cognitive engine
-            </p>
-            <button className="relative w-32 h-32 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/50 animate-pulse-glow">
-              <div className="absolute inset-2 rounded-full border border-primary/30" />
-              <div className="absolute inset-5 rounded-full border border-primary/20" />
-              <span className="relative font-semibold text-sm flex flex-col items-center">
-                <Zap className="w-5 h-5 text-primary mb-1" />
-                Launch
-              </span>
-            </button>
-            <div className="mt-6 w-full">
-              <div className="flex justify-between text-[10px] font-mono text-muted-foreground mb-1">
-                <span>Progress</span>
-                <span>74%</span>
-              </div>
-              <div className="h-1 rounded-full bg-white/5 overflow-hidden">
-                <div className="h-full w-[74%] bg-gradient-to-r from-primary to-secondary" />
-              </div>
-            </div>
+          <div className="col-span-12 lg:col-span-5 cyber-card scanline p-5 relative min-w-0">
+            <PreviewMission />
           </div>
         </div>
       </main>
