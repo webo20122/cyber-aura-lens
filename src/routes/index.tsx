@@ -141,12 +141,12 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="mt-10 flex flex-wrap items-center justify-center gap-3"
         >
-          <a
-            href="#"
+          <Link
+            to="/signup"
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-medium px-5 py-3 rounded-lg glow-cyan hover:brightness-110 transition"
           >
             Launch a mission <Zap className="w-4 h-4" />
-          </a>
+          </Link>
           <a
             href="#platform"
             className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.02] px-5 py-3 rounded-lg hover:bg-white/[0.05] transition"
