@@ -451,30 +451,112 @@ function NavGroup({
   );
 }
 
-function SeverityChart() {
-  const bars = [
-    { l: "Critical", v: 88, c: "from-cyber-red to-cyber-red/40" },
-    { l: "High", v: 64, c: "from-cyber-orange to-cyber-orange/40" },
-    { l: "Medium", v: 48, c: "from-cyber-yellow to-cyber-yellow/40" },
-    { l: "Low", v: 30, c: "from-primary to-primary/30" },
-    { l: "Info", v: 18, c: "from-secondary to-secondary/30" },
-  ];
+function InteractiveSeverity({
+  filter,
+  setFilter,
+}: {
+  filter: Severity | "All";
+  setFilter: (s: Severity | "All") => void;
+}) {
   return (
-    <div className="flex items-end justify-between gap-4 h-48">
-      {bars.map((b) => (
-        <div key={b.l} className="flex-1 flex flex-col items-center gap-2">
-          <div className="w-full flex-1 flex items-end">
-            <motion.div
-              initial={{ height: 0 }}
-              whileInView={{ height: `${b.v}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className={`w-full rounded-t-md bg-gradient-to-t ${b.c}`}
-            />
-          </div>
-          <span className="text-[10px] font-mono text-muted-foreground">{b.l}</span>
+    <div className="flex items-end justify-between gap-2 sm:gap-4 h-44 sm:h-48">
+      {severityBars.map((b) => {
+        const active = filter === b.l;
+        return (
+          <button
+            key={b.l}
+            onClick={() => setFilter(active ? "All" : b.l)}
+            className="flex-1 flex flex-col items-center gap-2 group min-w-0"
+          >
+            <div className="w-full flex-1 flex items-end">
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{
+                  height: `${b.v}%`,
+                  opacity: filter === "All" || active ? 1 : 0.3,
+                }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className={`w-full rounded-t-md bg-gradient-to-t ${b.c} group-hover:brightness-125 transition`}
+              />
+            </div>
+            <span className={`text-[10px] font-mono ${active ? severityColor[b.l] : "text-muted-foreground"}`}>
+              {b.l}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function PreviewMission() {
+  const [running, setRunning] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [lines, setLines] = useState<string[]>([]);
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  useEffect(() => () => { if (timer.current) clearInterval(timer.current); }, []);
+  const launch = () => {
+    if (running) return;
+    setRunning(true);
+    setProgress(0);
+    setLines([]);
+    let i = 0;
+    timer.current = setInterval(() => {
+      setLines((p) => [...p, terminalLines[i % terminalLines.length]]);
+      setProgress((p) => Math.min(100, p + 100 / terminalLines.length));
+      i++;
+      if (i >= terminalLines.length) {
+        if (timer.current) clearInterval(timer.current);
+        setRunning(false);
+      }
+    }, 360);
+  };
+  return (
+    <div className="flex flex-col h-full">
+      <p className="text-[10px] font-mono uppercase tracking-widest text-primary mb-1">
+        // mission control
+      </p>
+      <p className="text-xs text-muted-foreground mb-4">
+        52 tools · cognitive engine v2
+      </p>
+      <div className="flex items-center justify-center mb-4">
+        <button
+          onClick={launch}
+          disabled={running}
+          className="relative w-24 h-24 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/50 animate-pulse-glow disabled:animate-none hover:brightness-125 transition"
+        >
+          <div className="absolute inset-2 rounded-full border border-primary/30" />
+          <div className="absolute inset-4 rounded-full border border-primary/20" />
+          <span className="relative font-semibold text-xs flex flex-col items-center">
+            <Zap className="w-4 h-4 text-primary mb-0.5" />
+            {running ? "Running" : "Launch"}
+          </span>
+        </button>
+      </div>
+      <div className="mb-2">
+        <div className="flex justify-between text-[10px] font-mono text-muted-foreground mb-1">
+          <span>progress</span>
+          <span>{Math.round(progress)}%</span>
         </div>
-      ))}
+        <div className="h-1 rounded-full bg-white/5 overflow-hidden">
+          <motion.div animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} className="h-full bg-gradient-to-r from-primary to-secondary" />
+        </div>
+      </div>
+      <div className="flex-1 min-h-[120px] max-h-40 overflow-y-auto bg-black/40 rounded-md border border-white/[0.05] p-2 font-mono text-[10px] leading-relaxed">
+        {lines.length === 0 ? (
+          <div className="text-muted-foreground/70">
+            <span className="text-primary">$</span> aether engage --auto
+            <br />
+            <span className="text-muted-foreground/50">// press Launch to stream</span>
+          </div>
+        ) : (
+          lines.map((l, i) => (
+            <div key={i} className={l.startsWith("[!]") ? "text-cyber-red" : l.startsWith("[+]") ? "text-cyber-green" : "text-muted-foreground"}>
+              {l}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
