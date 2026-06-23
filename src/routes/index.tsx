@@ -307,27 +307,22 @@ function DashboardMockup() {
           ))}
 
           {/* Findings by severity */}
-          <div className="col-span-12 lg:col-span-7 cyber-card p-5">
-            <div className="flex items-center justify-between mb-5">
-              <div>
+          <div className="col-span-12 lg:col-span-7 cyber-card p-5 min-w-0">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 mb-5">
+              <div className="min-w-0">
                 <h3 className="text-sm font-medium">Findings by severity</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">Last 30 days</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5 font-mono">click a bar to filter →</p>
               </div>
-              <div className="flex gap-3 text-[10px] font-mono text-muted-foreground">
-                {[
-                  ["Critical", "bg-cyber-red"],
-                  ["High", "bg-cyber-orange"],
-                  ["Medium", "bg-cyber-yellow"],
-                  ["Low", "bg-primary"],
-                  ["Info", "bg-secondary"],
-                ].map(([l, c]) => (
-                  <span key={l} className="flex items-center gap-1.5">
-                    <span className={`w-2 h-2 rounded-sm ${c}`} /> {l}
-                  </span>
-                ))}
-              </div>
+              {filter !== "All" && (
+                <button
+                  onClick={() => setFilter("All")}
+                  className="text-[10px] font-mono uppercase tracking-widest text-primary hover:underline shrink-0"
+                >
+                  clear ×
+                </button>
+              )}
             </div>
-            <SeverityChart />
+            <InteractiveSeverity filter={filter} setFilter={setFilter} />
           </div>
 
           {/* Scans history */}
