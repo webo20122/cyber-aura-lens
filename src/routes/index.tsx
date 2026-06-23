@@ -1,35 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
-  Shield,
-  Terminal,
-  Network,
-  Cloud,
-  GitBranch,
-  Cpu,
-  Radar,
-  Activity,
-  Lock,
-  ArrowRight,
-  ChevronRight,
-  Sparkles,
-  Zap,
-  Search,
-  Bell,
-  Plus,
-  Circle,
-  Triangle,
-  Layers,
-  Eye,
-  Bug,
-  FileText,
-  Users,
-  Settings,
-  Workflow,
-  Crosshair,
-  Brain,
+  Shield, Terminal, Network, Cloud, GitBranch, Cpu, Radar, Activity, Lock,
+  ArrowRight, ChevronRight, Sparkles, Zap, Search, Bell, Plus, Circle, Triangle,
+  Layers, Eye, Bug, FileText, Users, Settings, Workflow, Crosshair, Brain,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import logo from "@/assets/aethersec-logo.png";
+import { LogoMark as SharedLogoMark } from "@/components/cyber/LogoMark";
+import { severityBars, terminalLines, type Severity, severityColor } from "@/lib/mock/data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -79,10 +58,10 @@ function Nav() {
   ];
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/60 border-b border-white/[0.06]">
-      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
-          <LogoMark />
-          <span className="font-semibold tracking-tight text-lg">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <a href="#" className="flex items-center gap-2 min-w-0">
+          <SharedLogoMark />
+          <span className="font-semibold tracking-tight text-base sm:text-lg truncate">
             Aether<span className="text-primary">Sec</span>
           </span>
           <span className="hidden sm:inline ml-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground border border-white/10 rounded px-1.5 py-0.5">
@@ -96,19 +75,19 @@ function Nav() {
             </a>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
-          <a
-            href="#"
+        <div className="flex items-center gap-2 shrink-0">
+          <Link
+            to="/login"
             className="hidden sm:inline-flex text-sm text-muted-foreground hover:text-foreground px-3 py-2"
           >
             Sign in
-          </a>
-          <a
-            href="#"
-            className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary text-primary-foreground px-4 py-2 rounded-lg glow-cyan hover:brightness-110 transition"
+          </Link>
+          <Link
+            to="/signup"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium bg-primary text-primary-foreground px-3 sm:px-4 py-2 rounded-lg glow-cyan hover:brightness-110 transition"
           >
             Request access <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          </Link>
         </div>
       </div>
     </header>
@@ -116,12 +95,7 @@ function Nav() {
 }
 
 function LogoMark() {
-  return (
-    <div className="relative w-8 h-8 rounded-md cyber-card flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/20" />
-      <Shield className="relative w-4 h-4 text-primary" strokeWidth={2.2} />
-    </div>
-  );
+  return <SharedLogoMark />;
 }
 
 /* ---------------- Hero ---------------- */
@@ -167,12 +141,12 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="mt-10 flex flex-wrap items-center justify-center gap-3"
         >
-          <a
-            href="#"
+          <Link
+            to="/signup"
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-medium px-5 py-3 rounded-lg glow-cyan hover:brightness-110 transition"
           >
             Launch a mission <Zap className="w-4 h-4" />
-          </a>
+          </Link>
           <a
             href="#platform"
             className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.02] px-5 py-3 rounded-lg hover:bg-white/[0.05] transition"
@@ -258,8 +232,10 @@ function DashboardPreview() {
 }
 
 function DashboardMockup() {
+  const [filter, setFilter] = useState<Severity | "All">("All");
   return (
     <div className="grid grid-cols-12 min-h-[680px]">
+
       {/* Sidebar */}
       <aside className="hidden md:flex md:col-span-2 flex-col border-r border-white/[0.06] bg-depth-1/40 p-3 text-xs">
         <div className="flex items-center gap-2 px-2 py-2 mb-3">
@@ -331,27 +307,22 @@ function DashboardMockup() {
           ))}
 
           {/* Findings by severity */}
-          <div className="col-span-12 lg:col-span-7 cyber-card p-5">
-            <div className="flex items-center justify-between mb-5">
-              <div>
+          <div className="col-span-12 lg:col-span-7 cyber-card p-5 min-w-0">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 mb-5">
+              <div className="min-w-0">
                 <h3 className="text-sm font-medium">Findings by severity</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">Last 30 days</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5 font-mono">click a bar to filter →</p>
               </div>
-              <div className="flex gap-3 text-[10px] font-mono text-muted-foreground">
-                {[
-                  ["Critical", "bg-cyber-red"],
-                  ["High", "bg-cyber-orange"],
-                  ["Medium", "bg-cyber-yellow"],
-                  ["Low", "bg-primary"],
-                  ["Info", "bg-secondary"],
-                ].map(([l, c]) => (
-                  <span key={l} className="flex items-center gap-1.5">
-                    <span className={`w-2 h-2 rounded-sm ${c}`} /> {l}
-                  </span>
-                ))}
-              </div>
+              {filter !== "All" && (
+                <button
+                  onClick={() => setFilter("All")}
+                  className="text-[10px] font-mono uppercase tracking-widest text-primary hover:underline shrink-0"
+                >
+                  clear ×
+                </button>
+              )}
             </div>
-            <SeverityChart />
+            <InteractiveSeverity filter={filter} setFilter={setFilter} />
           </div>
 
           {/* Scans history */}
@@ -410,30 +381,8 @@ function DashboardMockup() {
           </div>
 
           {/* Auto pentest mission */}
-          <div className="col-span-12 lg:col-span-5 cyber-card scanline p-5 flex flex-col items-center justify-center text-center relative">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-primary mb-2">
-              Auto Pentest — Mission Control
-            </p>
-            <p className="text-xs text-muted-foreground mb-6 max-w-[28ch]">
-              52 tools orchestrated by the cognitive engine
-            </p>
-            <button className="relative w-32 h-32 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/50 animate-pulse-glow">
-              <div className="absolute inset-2 rounded-full border border-primary/30" />
-              <div className="absolute inset-5 rounded-full border border-primary/20" />
-              <span className="relative font-semibold text-sm flex flex-col items-center">
-                <Zap className="w-5 h-5 text-primary mb-1" />
-                Launch
-              </span>
-            </button>
-            <div className="mt-6 w-full">
-              <div className="flex justify-between text-[10px] font-mono text-muted-foreground mb-1">
-                <span>Progress</span>
-                <span>74%</span>
-              </div>
-              <div className="h-1 rounded-full bg-white/5 overflow-hidden">
-                <div className="h-full w-[74%] bg-gradient-to-r from-primary to-secondary" />
-              </div>
-            </div>
+          <div className="col-span-12 lg:col-span-5 cyber-card scanline p-5 relative min-w-0">
+            <PreviewMission />
           </div>
         </div>
       </main>
@@ -480,30 +429,112 @@ function NavGroup({
   );
 }
 
-function SeverityChart() {
-  const bars = [
-    { l: "Critical", v: 88, c: "from-cyber-red to-cyber-red/40" },
-    { l: "High", v: 64, c: "from-cyber-orange to-cyber-orange/40" },
-    { l: "Medium", v: 48, c: "from-cyber-yellow to-cyber-yellow/40" },
-    { l: "Low", v: 30, c: "from-primary to-primary/30" },
-    { l: "Info", v: 18, c: "from-secondary to-secondary/30" },
-  ];
+function InteractiveSeverity({
+  filter,
+  setFilter,
+}: {
+  filter: Severity | "All";
+  setFilter: (s: Severity | "All") => void;
+}) {
   return (
-    <div className="flex items-end justify-between gap-4 h-48">
-      {bars.map((b) => (
-        <div key={b.l} className="flex-1 flex flex-col items-center gap-2">
-          <div className="w-full flex-1 flex items-end">
-            <motion.div
-              initial={{ height: 0 }}
-              whileInView={{ height: `${b.v}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className={`w-full rounded-t-md bg-gradient-to-t ${b.c}`}
-            />
-          </div>
-          <span className="text-[10px] font-mono text-muted-foreground">{b.l}</span>
+    <div className="flex items-end justify-between gap-2 sm:gap-4 h-44 sm:h-48">
+      {severityBars.map((b) => {
+        const active = filter === b.l;
+        return (
+          <button
+            key={b.l}
+            onClick={() => setFilter(active ? "All" : b.l)}
+            className="flex-1 flex flex-col items-center gap-2 group min-w-0"
+          >
+            <div className="w-full flex-1 flex items-end">
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{
+                  height: `${b.v}%`,
+                  opacity: filter === "All" || active ? 1 : 0.3,
+                }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className={`w-full rounded-t-md bg-gradient-to-t ${b.c} group-hover:brightness-125 transition`}
+              />
+            </div>
+            <span className={`text-[10px] font-mono ${active ? severityColor[b.l] : "text-muted-foreground"}`}>
+              {b.l}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function PreviewMission() {
+  const [running, setRunning] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [lines, setLines] = useState<string[]>([]);
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  useEffect(() => () => { if (timer.current) clearInterval(timer.current); }, []);
+  const launch = () => {
+    if (running) return;
+    setRunning(true);
+    setProgress(0);
+    setLines([]);
+    let i = 0;
+    timer.current = setInterval(() => {
+      setLines((p) => [...p, terminalLines[i % terminalLines.length]]);
+      setProgress((p) => Math.min(100, p + 100 / terminalLines.length));
+      i++;
+      if (i >= terminalLines.length) {
+        if (timer.current) clearInterval(timer.current);
+        setRunning(false);
+      }
+    }, 360);
+  };
+  return (
+    <div className="flex flex-col h-full">
+      <p className="text-[10px] font-mono uppercase tracking-widest text-primary mb-1">
+        // mission control
+      </p>
+      <p className="text-xs text-muted-foreground mb-4">
+        52 tools · cognitive engine v2
+      </p>
+      <div className="flex items-center justify-center mb-4">
+        <button
+          onClick={launch}
+          disabled={running}
+          className="relative w-24 h-24 rounded-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/50 animate-pulse-glow disabled:animate-none hover:brightness-125 transition"
+        >
+          <div className="absolute inset-2 rounded-full border border-primary/30" />
+          <div className="absolute inset-4 rounded-full border border-primary/20" />
+          <span className="relative font-semibold text-xs flex flex-col items-center">
+            <Zap className="w-4 h-4 text-primary mb-0.5" />
+            {running ? "Running" : "Launch"}
+          </span>
+        </button>
+      </div>
+      <div className="mb-2">
+        <div className="flex justify-between text-[10px] font-mono text-muted-foreground mb-1">
+          <span>progress</span>
+          <span>{Math.round(progress)}%</span>
         </div>
-      ))}
+        <div className="h-1 rounded-full bg-white/5 overflow-hidden">
+          <motion.div animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} className="h-full bg-gradient-to-r from-primary to-secondary" />
+        </div>
+      </div>
+      <div className="flex-1 min-h-[120px] max-h-40 overflow-y-auto bg-black/40 rounded-md border border-white/[0.05] p-2 font-mono text-[10px] leading-relaxed">
+        {lines.length === 0 ? (
+          <div className="text-muted-foreground/70">
+            <span className="text-primary">$</span> aether engage --auto
+            <br />
+            <span className="text-muted-foreground/50">// press Launch to stream</span>
+          </div>
+        ) : (
+          lines.map((l, i) => (
+            <div key={i} className={l.startsWith("[!]") ? "text-cyber-red" : l.startsWith("[+]") ? "text-cyber-green" : "text-muted-foreground"}>
+              {l}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
