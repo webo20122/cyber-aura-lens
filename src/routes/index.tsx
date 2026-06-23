@@ -232,8 +232,10 @@ function DashboardPreview() {
 }
 
 function DashboardMockup() {
+  const [filter, setFilter] = useState<Severity | "All">("All");
   return (
     <div className="grid grid-cols-12 min-h-[680px]">
+      {void filter && null}
       {/* Sidebar */}
       <aside className="hidden md:flex md:col-span-2 flex-col border-r border-white/[0.06] bg-depth-1/40 p-3 text-xs">
         <div className="flex items-center gap-2 px-2 py-2 mb-3">
