@@ -1,35 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
-  Shield,
-  Terminal,
-  Network,
-  Cloud,
-  GitBranch,
-  Cpu,
-  Radar,
-  Activity,
-  Lock,
-  ArrowRight,
-  ChevronRight,
-  Sparkles,
-  Zap,
-  Search,
-  Bell,
-  Plus,
-  Circle,
-  Triangle,
-  Layers,
-  Eye,
-  Bug,
-  FileText,
-  Users,
-  Settings,
-  Workflow,
-  Crosshair,
-  Brain,
+  Shield, Terminal, Network, Cloud, GitBranch, Cpu, Radar, Activity, Lock,
+  ArrowRight, ChevronRight, Sparkles, Zap, Search, Bell, Plus, Circle, Triangle,
+  Layers, Eye, Bug, FileText, Users, Settings, Workflow, Crosshair, Brain,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import logo from "@/assets/aethersec-logo.png";
+import { LogoMark as SharedLogoMark } from "@/components/cyber/LogoMark";
+import { severityBars, terminalLines, type Severity, severityColor } from "@/lib/mock/data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
