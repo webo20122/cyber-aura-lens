@@ -58,10 +58,10 @@ function Nav() {
   ];
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/60 border-b border-white/[0.06]">
-      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
-          <LogoMark />
-          <span className="font-semibold tracking-tight text-lg">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <a href="#" className="flex items-center gap-2 min-w-0">
+          <SharedLogoMark />
+          <span className="font-semibold tracking-tight text-base sm:text-lg truncate">
             Aether<span className="text-primary">Sec</span>
           </span>
           <span className="hidden sm:inline ml-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground border border-white/10 rounded px-1.5 py-0.5">
@@ -75,19 +75,19 @@ function Nav() {
             </a>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
-          <a
-            href="#"
+        <div className="flex items-center gap-2 shrink-0">
+          <Link
+            to="/login"
             className="hidden sm:inline-flex text-sm text-muted-foreground hover:text-foreground px-3 py-2"
           >
             Sign in
-          </a>
-          <a
-            href="#"
-            className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary text-primary-foreground px-4 py-2 rounded-lg glow-cyan hover:brightness-110 transition"
+          </Link>
+          <Link
+            to="/signup"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium bg-primary text-primary-foreground px-3 sm:px-4 py-2 rounded-lg glow-cyan hover:brightness-110 transition"
           >
             Request access <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          </Link>
         </div>
       </div>
     </header>
@@ -95,12 +95,7 @@ function Nav() {
 }
 
 function LogoMark() {
-  return (
-    <div className="relative w-8 h-8 rounded-md cyber-card flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/20" />
-      <Shield className="relative w-4 h-4 text-primary" strokeWidth={2.2} />
-    </div>
-  );
+  return <SharedLogoMark />;
 }
 
 /* ---------------- Hero ---------------- */
