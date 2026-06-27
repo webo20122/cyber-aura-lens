@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Plus, Zap, Search, Filter, Play, Pause, MoreVertical, Terminal, Radar, Crosshair, ChevronRight } from "lucide-react";
+import { Plus, Search, Filter, Play, Pause, MoreVertical, Terminal, Radar, Crosshair, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { AppShell } from "@/components/cyber/AppShell";
 import { PageHeader, SeverityChip } from "@/components/cyber/PageHeader";
