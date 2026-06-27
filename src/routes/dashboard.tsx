@@ -17,9 +17,8 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 function DashboardPage() {
-  const [view, setView] = useState("dashboard");
   return (
-    <AppShell view={view} onViewChange={setView}>
+    <AppShell>
       <div className="px-4 sm:px-6 py-6 max-w-[1600px] mx-auto">
         <PageHeader />
         <KPIRow />
