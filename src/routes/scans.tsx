@@ -191,4 +191,3 @@ function Stat({ icon: Icon, label, value }: { icon: React.ComponentType<{ classN
     </div>
   );
 }
-{ void Zap }
