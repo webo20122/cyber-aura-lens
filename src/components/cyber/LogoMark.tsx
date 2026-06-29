@@ -61,8 +61,8 @@ export function LogoMark({
 
 export function WordMark({ pro = true }: { pro?: boolean }) {
   return (
-    <span className="flex items-center gap-2 min-w-0">
-      <LogoMark />
+    <span className="flex items-center gap-2 min-w-0 text-white">
+      <LogoMark variant="crown" />
       <span className="font-semibold tracking-tight text-lg truncate">
         Aether<span className="text-primary">Sec</span>
       </span>
