@@ -1,47 +1,7 @@
-import markUrl from "@/assets/aethersec-mark-white.png";
+import markUrl from "@/assets/aethersec-mark-crown.png";
 
-export function LogoMark({
-  size = 8,
-  variant = "crown",
-}: {
-  size?: number;
-  variant?: "equal" | "crown";
-}) {
+export function LogoMark({ size = 8 }: { size?: number }) {
   const px = size * 4;
-
-  if (variant === "crown") {
-    return (
-      <svg
-        width={px}
-        height={px}
-        viewBox="0 0 32 32"
-        fill="none"
-        className="shrink-0 drop-shadow-[0_0_6px_rgba(45,212,191,0.45)]"
-        aria-label="AetherSec"
-      >
-        {/* three diagonal slashes, middle tallest */}
-        <path
-          d="M8 22L14 10"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-        <path
-          d="M14 24L20 8"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-        <path
-          d="M20 22L26 10"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-      </svg>
-    );
-  }
-
   return (
     <div
       className="relative flex items-center justify-center shrink-0"
@@ -52,7 +12,7 @@ export function LogoMark({
         alt="AetherSec"
         width={px}
         height={px}
-        className="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.25)]"
+        className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(45,212,191,0.35)]"
         loading="lazy"
       />
     </div>
@@ -61,8 +21,8 @@ export function LogoMark({
 
 export function WordMark({ pro = true }: { pro?: boolean }) {
   return (
-    <span className="flex items-center gap-2 min-w-0 text-white">
-      <LogoMark variant="crown" />
+    <span className="flex items-center gap-2 min-w-0">
+      <LogoMark />
       <span className="font-semibold tracking-tight text-lg truncate">
         Aether<span className="text-primary">Sec</span>
       </span>
