@@ -1,4 +1,4 @@
-import markUrl from "@/assets/aethersec-mark.png";
+import markUrl from "@/assets/aethersec-mark-white.png";
 
 export function LogoMark({ size = 8 }: { size?: number }) {
   const px = size * 4;
@@ -12,7 +12,7 @@ export function LogoMark({ size = 8 }: { size?: number }) {
         alt="AetherSec"
         width={px}
         height={px}
-        className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(45,212,191,0.45)]"
+        className="w-full h-full object-contain drop-shadow-[0_0_6px_rgba(255,255,255,0.25)]"
         loading="lazy"
       />
     </div>
