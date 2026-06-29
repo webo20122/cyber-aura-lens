@@ -1,16 +1,19 @@
-import { Shield } from "lucide-react";
+import markUrl from "@/assets/aethersec-mark.png";
 
 export function LogoMark({ size = 8 }: { size?: number }) {
+  const px = size * 4;
   return (
     <div
-      className="relative rounded-md cyber-card flex items-center justify-center overflow-hidden shrink-0"
-      style={{ width: `${size * 4}px`, height: `${size * 4}px` }}
+      className="relative flex items-center justify-center shrink-0"
+      style={{ width: `${px}px`, height: `${px}px` }}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/20" />
-      <Shield
-        className="relative text-primary"
-        style={{ width: `${size * 2}px`, height: `${size * 2}px` }}
-        strokeWidth={2.2}
+      <img
+        src={markUrl}
+        alt="AetherSec"
+        width={px}
+        height={px}
+        className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(45,212,191,0.45)]"
+        loading="lazy"
       />
     </div>
   );
